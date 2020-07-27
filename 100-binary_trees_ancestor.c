@@ -4,7 +4,6 @@
  * is_ancestor - checks if a key node exists in a subtree of search
  * @search: binary tree to be searched
  * @key: key to search for
- * @prev: the previous search key
  * Return: 1 if key found, else 0
  */
 int is_ancestor(const binary_tree_t *search, const binary_tree_t *key)
