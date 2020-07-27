@@ -1,35 +1,40 @@
 #include "binary_trees.h"
+
 /**
- * ExistNode - a function that checks if node exists
- * @root: root
- * @node: pointer to the node to search for
- * Return: 1 if contains node, 0 otherwise
+ * is_ancestor - checks if a key node exists in a subtree of search
+ * @search: binary tree to be searched
+ * @key: key to search for
+ * @prev: the previous search key
+ * Return: 1 if key found, else 0
  */
-int ExistNode(const binary_tree_t *root, const binary_tree_t *node)
+int is_ancestor(const binary_tree_t *search, const binary_tree_t *key)
 {
-	if (!root)
+	if (!search)
 		return (0);
-	if (root == node)
+	if (search == key)
 		return (1);
-	return (ExistNode(root->left, node) | ExistNode(root->right, node));
+	return (is_ancestor(search->left, key) |
+			is_ancestor(search->right, key));
 }
 
 /**
- * binary_tree_ancestor- finds the lowest common ancestor of two nodes
- * @frist: a pointer to the first node
- * @second: a pointer to the second node
- * Return: pointer to the lowest common ancestor
+ * binary_tree_ancestor - checks if two binary trees share a common ancestor
+ * @first: first binary tree
+ * @second: second binary tree
+ * Return: binary_tree_t * or NULL
  */
-binary_tree_t *binary_tree_ancestor(const binary_tree_t *first,
-				    const binary_tree_t *second)
+binary_tree_t *binary_trees_ancestor(const binary_tree_t *first,
+		const binary_tree_t *second)
 {
-	binary_tree_t *node = (binary_tree_t *)first;
+	binary_tree_t *search = (binary_tree_t *)first;
 
-	while (node)
+
+	while (search)
 	{
-		if (ExistNode(node, second))
-			return (node);
-		node = node->parent;
+		if (is_ancestor(search, second))
+			return (search);
+		search = search->parent;
 	}
+
 	return (NULL);
 }
